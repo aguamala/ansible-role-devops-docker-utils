@@ -1,0 +1,10 @@
+
+
+registrator:
+ image: gliderlabs/registrator:{{ devops_docker_utils.registrator.tag }}
+ hostname: {{ hostname }}
+ net: "host"
+ command: {{ devops_docker_utils.registrator.command }}
+ restart: {{ devops_docker_utils.registrator.restart }}
+ volumes:
+   - /var/run/docker.sock:/tmp/docker.sock

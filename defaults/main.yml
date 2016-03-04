@@ -1,0 +1,41 @@
+---
+# defaults file for ansible-role-devops-docker-utils
+
+#main
+#devops_docker_utils_user: centos
+#devops_docker_utils_compose_dir: devops_docker_utils
+
+#consul
+devops_docker_utils_consul_server_bootstrap: no
+devops_docker_utils_consul_server_mode: no
+#devops_docker_utils_consul_datacenter: development
+#devops_docker_utils_consul_config_node: consul
+
+devops_docker_utils:
+  user: "{{ devops_docker_utils_user | default('centos') }}"
+  compose_dir: "/home/{{ devops_docker_utils_user | default('centos') }}/{{ devops_docker_utils_compose_dir | default('devops_docker_utils') }}"
+  consul:
+    tag: latest
+    restart: always
+    entrypoint: /bin/consul agent {{ '-server' if devops_docker_utils_consul_server_mode else '' }} -config-dir=/config
+
+    config:
+      node: "{{ devops_docker_utils_consul_config_node | default(hostname) }}"
+      bootstrap: "{{ 'true' if devops_docker_utils_consul_server_bootstrap else 'false' }}"
+      server: "{{ 'true' if devops_docker_utils_consul_server_mode else 'false' }}"
+      data_dir: "/var/consul"
+      datacenter: "{{ devops_docker_utils_consul_datacenter | default('development') }}"
+      log_level: "INFO"
+      enable_syslog: true
+      #start_join:
+
+  registrator:
+    tag: latest
+    command: -ip {{ ansible_default_ipv4.address }} consul://consul:8500
+    restart: always
+    net: host
+  logspout:
+    tag: latest
+    ports: "8000:8000"
+    restart: always
+    #command:

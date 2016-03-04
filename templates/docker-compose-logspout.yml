@@ -1,0 +1,13 @@
+
+
+logspout:
+  image: gliderlabs/logspout:{{ devops_docker_utils.logspout.tag }}
+  hostname: {{ hostname }}
+  ports:
+    - "{{ devops_docker_utils.logspout.ports }}"
+  {% if (devops_docker_utils.logspout.command is defined) %}
+  command: {{ devops_docker_utils.logspout.command }}
+  {% endif %}
+  restart: {{ devops_docker_utils.logspout.restart }}
+  volumes:
+     - /var/run/docker.sock:/tmp/docker.sock

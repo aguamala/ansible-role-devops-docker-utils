@@ -1,0 +1,13 @@
+{
+  "node_name": {{ devops_docker_utils.consul.config.node | to_nice_json }},
+  "bootstrap": {{ devops_docker_utils.consul.config.bootstrap | to_nice_json }},
+  "server": {{ devops_docker_utils.consul.config.server | to_nice_json }},
+  "datacenter": {{ devops_docker_utils.consul.config.datacenter | to_nice_json }},
+  "log_level": {{ devops_docker_utils.consul.config.log_level | to_nice_json }},
+  {% if (devops_docker_utils.consul.config.start_join is defined) %}
+"enable_syslog": {{ devops_docker_utils.consul.config.enable_syslog | to_nice_json }},
+"start_join": {{ devops_docker_utils.consul.config.start_join | to_nice_json }}
+  {% else %}
+"enable_syslog": {{ devops_docker_utils.consul.config.enable_syslog | to_nice_json }}
+  {% endif %}
+}

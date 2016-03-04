@@ -1,0 +1,11 @@
+
+
+consul:
+  image: gliderlabs/consul-{{ 'server' if devops_docker_utils_consul_server_mode else 'agent' }}:{{ devops_docker_utils.consul.tag }}
+  hostname: {{ hostname }}
+  net: "host"
+  restart: {{ devops_docker_utils.consul.restart }}
+  entrypoint: {{ devops_docker_utils.consul.entrypoint }}
+  restart: {{ devops_docker_utils.consul.restart }}
+  volumes:
+    - ./consul/config:/config/
