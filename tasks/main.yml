@@ -15,30 +15,23 @@
   file: path="{{ devops_docker_utils.compose_dir }}/assemble"  state=directory recurse=yes owner={{ devops_docker_utils.user }} group={{ devops_docker_utils.user }}
 
 - name: copy consul template
-  template: src=docker-compose-consul.yml dest="{{ devops_docker_utils.compose_dir }}/assemble/"  owner={{ devops_docker_utils.user }} group={{ devops_docker_utils.user }}
-  when: devops_docker_utils.consul is defined
-  tags: consul
-
-- name: create consul config dir
-  file: path="{{ devops_docker_utils.compose_dir }}/consul/config" state=directory recurse=yes owner={{ devops_docker_utils.user }} group={{ devops_docker_utils.user }}
-  when: devops_docker_utils.consul is defined
-  tags: consul
-
-- name: copy consul config
-  template: src=consul/config.json dest="{{ devops_docker_utils.compose_dir }}/consul/config/" owner={{ devops_docker_utils.user }} group={{ devops_docker_utils.user }}
+  template: src=docker-compose-consul.yml dest="{{ devops_docker_utils.compose_dir }}/assemble/0_consul.yml"  owner={{ devops_docker_utils.user }} group={{ devops_docker_utils.user }}
   when: devops_docker_utils.consul is defined
   tags: consul
 
 - name: copy registrator template
-  template: src=docker-compose-registrator.yml dest="{{ devops_docker_utils.compose_dir }}/assemble/"  owner={{ devops_docker_utils.user }} group={{ devops_docker_utils.user }}
+  template: src=docker-compose-registrator.yml dest="{{ devops_docker_utils.compose_dir }}/assemble/1_registrator.yml"  owner={{ devops_docker_utils.user }} group={{ devops_docker_utils.user }}
   when: devops_docker_utils.registrator is defined
+  tags: registrator
 
 - name: copy logspout template
-  template: src=docker-compose-logspout.yml dest="{{ devops_docker_utils.compose_dir }}/assemble/"  owner={{ devops_docker_utils.user }} group={{ devops_docker_utils.user }}
+  template: src=docker-compose-logspout.yml dest="{{ devops_docker_utils.compose_dir }}/assemble/2_logspout.yml"  owner={{ devops_docker_utils.user }} group={{ devops_docker_utils.user }}
   when: devops_docker_utils.logspout is defined
+  tags: logspout
 
 - name: assemble docker-compose files
   assemble: src="{{ devops_docker_utils.compose_dir }}/assemble/" dest="{{ devops_docker_utils.compose_dir }}/docker-compose.yml" owner={{ devops_docker_utils.user }} group={{ devops_docker_utils.user }}
+  tags: docker_compose
 
 #- name: docker-compose up
 #  shell: /usr/bin/docker-compose up -d chdir="{{ devops_docker_utils.compose_dir }}"

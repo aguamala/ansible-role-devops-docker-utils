@@ -6,40 +6,33 @@
 #devops_docker_utils_compose_dir: devops_docker_utils
 
 #consul
-devops_docker_utils_consul_server_bootstrap: no
-devops_docker_utils_consul_server_mode: no
-#devops_docker_utils_consul_datacenter: development
-#devops_docker_utils_consul_config_node: consul
+devops_docker_utils_consul_server_mode: False
+devops_docker_utils_consul_bootstrap: False
+devops_docker_utils_consul_args: "-node 'consul-node-{{ hostname }}' -dc 'virginia' -join '172.20.0.171' -log-level 'INFO'"
+
+#registrator
+#devops_docker_utils_registrator_command: consul://localhost:8500
 
 devops_docker_utils:
   user: "{{ devops_docker_utils_user | default('centos') }}"
   compose_dir: "/home/{{ devops_docker_utils_user | default('centos') }}/{{ devops_docker_utils_compose_dir | default('devops_docker_utils') }}"
-  consul:
-    tag: latest
-    restart: always
-    entrypoint: /bin/consul agent {{ '-server' if devops_docker_utils_consul_server_mode else '' }} -config-dir=/config
 
-    config:
-      node: "{{ devops_docker_utils_consul_config_node | default(hostname) }}"
-      bootstrap: "{{ 'true' if devops_docker_utils_consul_server_bootstrap else 'false' }}"
-      server: "{{ 'true' if devops_docker_utils_consul_server_mode else 'false' }}"
-      data_dir: "/var/consul"
-      datacenter: "{{ devops_docker_utils_consul_datacenter | default('development') }}"
-      log_level: "INFO"
-      enable_syslog: true
-      #start_join:
+  consul:
+    tag: "{{ devops_docker_utils_consul_tag | default('latest') }}"
+    restart: "{{ devops_docker_utils_consul_restart | default('always') }}"
 
   registrator:
     tag: latest
-    command: -ip {{ ansible_default_ipv4.address }} consul://consul:8500
+    #command: -ip {{ ansible_default_ipv4.address }} consul://consul:8500
+    command: "{{ devops_docker_utils_registrator_command | default('consul://localhost:8500') }}"
     restart: always
     net: host
+
   logspout:
-    tag: latest
+    tag: master
     ports: "8000:8000"
     restart: always
-    #command:
-
+    command: "{{ devops_docker_utils_logspout_command | default('syslog://') }}"
 
 docker_engine_install:
   #install docker from docker repo
