@@ -39,3 +39,26 @@ devops_docker_utils:
     ports: "8000:8000"
     restart: always
     #command:
+
+
+docker_engine_install:
+  #install docker from docker repo
+  repos_install:
+      docker: true
+  pkg_mgr:
+    install:
+      - name: docker-engine
+        repo: dockerrepo
+
+  started: true
+  enabled: true
+  sysconfig:
+    options: --selinux-enabled
+    docker_cert_path: /etc/docker
+    #OPTIONAL
+    #add_registry:
+    #block_registry
+    #insecure_registry
+    #docker_tmpdir
+    #logrotate
+    #docker_network_options
