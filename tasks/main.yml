@@ -33,5 +33,9 @@
   assemble: src="{{ devops_docker_utils.compose_dir }}/assemble/" dest="{{ devops_docker_utils.compose_dir }}/docker-compose.yml" owner={{ devops_docker_utils.user }} group={{ devops_docker_utils.user }}
   tags: docker_compose
 
+- name: docker-compose pull
+  shell: /usr/bin/docker-compose pull chdir="{{ devops_docker_utils.compose_dir }}"
+  when: devops_docker_utils.pull 
+
 - name: docker-compose up
   shell: /usr/bin/docker-compose up -d chdir="{{ devops_docker_utils.compose_dir }}"

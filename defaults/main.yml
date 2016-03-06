@@ -16,6 +16,7 @@ devops_docker_utils_consul_args: "-node 'consul-node-{{ hostname }}' -dc 'virgin
 devops_docker_utils:
   user: "{{ devops_docker_utils_user | default('centos') }}"
   compose_dir: "/home/{{ devops_docker_utils_user | default('centos') }}/{{ devops_docker_utils_compose_dir | default('devops_docker_utils') }}"
+  pull: False 
 
   consul:
     tag: "{{ devops_docker_utils_consul_tag | default('latest') }}"
