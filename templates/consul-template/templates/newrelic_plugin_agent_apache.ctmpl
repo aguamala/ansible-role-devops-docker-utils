@@ -1,0 +1,9 @@
+
+  apache_httpd:{{ '{{' }}range service "apache"{{ '}}' }}
+    - name: {{ '{{' }}.Node{{ '}}' }}
+      scheme: http
+      host: {{ '{{' }}.Address{{ '}}' }}
+      verify_ssl_cert: false
+      port: {{ '{{' }}.Port{{ '}}' }}
+      path: /server-status
+      {{ '{{' }}end{{ '}}' }}

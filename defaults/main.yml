@@ -13,6 +13,24 @@ devops_docker_utils_consul_args: "-node 'consul-node-{{ hostname }}' -dc 'virgin
 #registrator
 #devops_docker_utils_registrator_command: consul://localhost:8500
 
+#service-discovery
+devops_docker_utils_service_discovery:
+  templates:
+    - name: haproxy_leastconn_backend
+      dest: "haproxy_leastconn_backend_apache"
+      conf_name: haproxy_leastconn_backend
+      conf_dest: haproxy_leastconn_backend_apache
+      port: 80
+      service: "apache"
+      command: "haproxy-restart"
+    - name: haproxy_leastconn_backend
+      dest: "haproxy_leastconn_backend_apache2"
+      conf_name: haproxy_leastconn_backend
+      conf_dest: haproxy_leastconn_backend_apache2
+      port: 81
+      service: "apache"
+      command: "haproxy-restart"
+
 devops_docker_utils:
   user: "{{ devops_docker_utils_user | default('centos') }}"
   compose_dir: "/home/{{ devops_docker_utils_user | default('centos') }}/{{ devops_docker_utils_compose_dir | default('devops_docker_utils') }}"
@@ -34,6 +52,11 @@ devops_docker_utils:
     ports: "8000:8000"
     restart: always
     command: "{{ devops_docker_utils_logspout_command | default('syslog://') }}"
+
+  service-discovery:
+    tag: latest
+    restart: always
+
 
 docker_engine_install:
   #install docker from docker repo

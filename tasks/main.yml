@@ -29,13 +29,18 @@
   when: devops_docker_utils.logspout is defined
   tags: logspout
 
+- name: create consul-template templates
+  include: service-discovery.yml
+  #when: devops_docker_utils.service-discovery is defined
+  tags: service-discovery
+
 - name: assemble docker-compose files
   assemble: src="{{ devops_docker_utils.compose_dir }}/assemble/" dest="{{ devops_docker_utils.compose_dir }}/docker-compose.yml" owner={{ devops_docker_utils.user }} group={{ devops_docker_utils.user }}
   tags: docker_compose
 
 - name: docker-compose pull
   shell: /usr/bin/docker-compose pull chdir="{{ devops_docker_utils.compose_dir }}"
-  when: devops_docker_utils.pull 
+  when: devops_docker_utils.pull
 
 - name: docker-compose up
   shell: /usr/bin/docker-compose up -d chdir="{{ devops_docker_utils.compose_dir }}"
