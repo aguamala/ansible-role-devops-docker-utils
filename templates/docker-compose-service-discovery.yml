@@ -1,11 +1,11 @@
 
 service-discovery:
- image: aguamala/service-discovery:{{ devops_docker_utils.service-discovery.tag }}
+ image: aguamala/service-discovery:{{ devops_docker_utils.service_discovery.tag }}
  hostname: {{ hostname }}
- restart: {{ devops_docker_utils.service-discovery.restart }}
+ restart: {{ devops_docker_utils.service_discovery.restart }}
  privileged: true
- {% for service in devops_docker_utils_service_discovery.templates  %}
  expose:
+ {% for service in devops_docker_utils_service_discovery.templates  %}
   - {{ service.port }}
  {% endfor %}
  volumes:

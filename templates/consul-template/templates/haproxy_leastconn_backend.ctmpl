@@ -1,5 +1,5 @@
 
-  backend be-{{ item.0.service }}
+  backend be-{{ item.service }}
     balance leastconn
-    mode http{{ '{{' }}range service "{{ item.0.service }}"{{ '}}' }}
+    mode http{{ '{{' }}range service "{{ item.service }}"{{ '}}' }}
     server {{ '{{' }}.Node{{ '}}' }} {{ '{{' }}.Address{{ '}}' }}:{{ '{{' }}.Port{{ '}}' }} check port {{ '{{' }}.Port{{ '}}' }}{{ '{{' }}end{{ '}}' }}

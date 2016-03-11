@@ -29,9 +29,10 @@
   when: devops_docker_utils.logspout is defined
   tags: logspout
 
+
 - name: create consul-template templates
   include: service-discovery.yml
-  #when: devops_docker_utils.service-discovery is defined
+  when: devops_docker_utils.service_discovery is defined
   tags: service-discovery
 
 - name: assemble docker-compose files

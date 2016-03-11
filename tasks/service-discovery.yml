@@ -1,24 +1,25 @@
 ---
 
-- debug: var=devops_docker_utils_service_discovery
+- name: create consul-template conf.d dir
+  file: path="{{ devops_docker_utils.compose_dir }}/consul-template/conf.d/" state=directory recurse=yes owner={{ devops_docker_utils.user }} group={{ devops_docker_utils.user }}
+  when: devops_docker_utils_service_discovery is defined
 
-
-- name: copy custom consul-template config
-  copy: src=devops_docker_utils_service_discovery.conf_file dest=dest="{{ devops_docker_utils.compose_dir }}/consul-template/config.d/config.hcl" recurse=yes owner={{ devops_docker_utils.user }} group={{ devops_docker_utils.user }}
-  when: devops_docker_utils_service_discovery.conf_file is defined
+- name: copy custom consul-template conf
+  copy: src=devops_docker_utils_service_discovery.conf_file dest=dest="{{ devops_docker_utils.compose_dir }}/consul-template/conf.d/config.hcl" recurse=yes owner={{ devops_docker_utils.user }} group={{ devops_docker_utils.user }}
+  when: devops_docker_utils.service_discovery.conf_file is defined
 
 - name: create consul-template templates dir
   file: path="{{ devops_docker_utils.compose_dir }}/consul-template/templates/" state=directory recurse=yes owner={{ devops_docker_utils.user }} group={{ devops_docker_utils.user }}
-  when: devops_docker_utils_service_discovery.templates is defined
+  when: devops_docker_utils_service_discovery is defined
 
 - name: copy source template file
   template: src="consul-template/templates/{{ item.name }}.ctmpl" dest="{{ devops_docker_utils.compose_dir }}/consul-template/templates/{{ item.dest }}.ctmpl" owner={{ devops_docker_utils.user }} group={{ devops_docker_utils.user }}
   with_items: devops_docker_utils_service_discovery.templates
+  when: devops_docker_utils_service_discovery is defined
 
 - name: copy template conf file
   template: src="consul-template/conf.d/{{ item.conf_name }}.hcl" dest="{{ devops_docker_utils.compose_dir }}/consul-template/conf.d/{{ item.conf_dest }}.hcl"  owner={{ devops_docker_utils.user }} group={{ devops_docker_utils.user }}
   with_items: devops_docker_utils_service_discovery.templates
-
 
 - name: copy service-discovery template
   template: src=docker-compose-service-discovery.yml dest="{{ devops_docker_utils.compose_dir }}/assemble/3_service-discovery.yml"  owner={{ devops_docker_utils.user }} group={{ devops_docker_utils.user }}

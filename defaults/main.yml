@@ -31,6 +31,7 @@ devops_docker_utils_service_discovery:
       service: "apache"
       command: "haproxy-restart"
 
+
 devops_docker_utils:
   user: "{{ devops_docker_utils_user | default('centos') }}"
   compose_dir: "/home/{{ devops_docker_utils_user | default('centos') }}/{{ devops_docker_utils_compose_dir | default('devops_docker_utils') }}"
@@ -53,7 +54,7 @@ devops_docker_utils:
     restart: always
     command: "{{ devops_docker_utils_logspout_command | default('syslog://') }}"
 
-  service-discovery:
+  service_discovery:
     tag: latest
     restart: always
 
