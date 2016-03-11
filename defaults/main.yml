@@ -5,6 +5,8 @@
 #devops_docker_utils_user: centos
 #devops_docker_utils_compose_dir: devops_docker_utils
 
+devops_docker_utils_docker_network: docker1
+
 #consul
 devops_docker_utils_consul_server_mode: False
 devops_docker_utils_consul_bootstrap: False
@@ -15,21 +17,39 @@ devops_docker_utils_consul_args: "-node 'consul-node-{{ hostname }}' -dc 'virgin
 
 #service-discovery
 devops_docker_utils_service_discovery:
-  templates:
-    - name: haproxy_leastconn_backend
-      dest: "haproxy_leastconn_backend_apache"
-      conf_name: haproxy_leastconn_backend
-      conf_dest: haproxy_leastconn_backend_apache
-      port: 80
-      service: "apache"
-      command: "haproxy-restart"
-    - name: haproxy_leastconn_backend
-      dest: "haproxy_leastconn_backend_apache2"
-      conf_name: haproxy_leastconn_backend
-      conf_dest: haproxy_leastconn_backend_apache2
-      port: 81
-      service: "apache"
-      command: "haproxy-restart"
+  haproxy:
+    maxconn: 4000
+    user: haproxy
+    group: haproxy
+    defaults:
+      mode: tcp
+      log: global
+      extras:
+        - option dontlognull
+        - option redispatch
+      retries: 3
+      timeout_http_request: 300s
+      timeout_queue: 1m
+      timeout_connect: 500s
+      timeout_client: 5000s
+      timeout_server: 1h
+      timeout_http_keep_alive: 55s
+      timeout_check: 10s
+      maxconn: 10000
+
+  consul_template:
+    templates:
+      - name: haproxy_frontend_backend
+        dest: "haproxy_frontend_backend_nginx"
+        conf_name: haproxy_frontend_backend
+        conf_dest: haproxy_frontend_backend_nginx
+        service: "nginx"
+        bind: 8181
+        mode: "tcp"
+        log: "global"
+        balance: leastconn
+        port: 8181
+        command: "haproxy-restart"
 
 
 devops_docker_utils:
@@ -43,7 +63,6 @@ devops_docker_utils:
 
   registrator:
     tag: latest
-    #command: -ip {{ ansible_default_ipv4.address }} consul://consul:8500
     command: "{{ devops_docker_utils_registrator_command | default('consul://localhost:8500') }}"
     restart: always
     net: host

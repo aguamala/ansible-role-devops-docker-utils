@@ -8,14 +8,22 @@
 #- name: copia credenciales de artifactory
 #  template: src=dockercfg dest=/root/.dockercfg owner=centos group=centos
 
+- name: create docker network
+  shell: docker network create -d bridge {{ devops_docker_utils_docker_network }}
+  ignore_errors: yes
+
 - name: create docker-compose dir
   file: path="{{ devops_docker_utils.compose_dir }}"  state=directory recurse=yes owner={{ devops_docker_utils.user }} group={{ devops_docker_utils.user }}
 
 - name: create docker-compose assemble dir
   file: path="{{ devops_docker_utils.compose_dir }}/assemble"  state=directory recurse=yes owner={{ devops_docker_utils.user }} group={{ devops_docker_utils.user }}
 
+- name: copy start docker_compose
+  template: src=start-docker-compose.yml dest="{{ devops_docker_utils.compose_dir }}/assemble/0_docker-compomse.yml"  owner={{ devops_docker_utils.user }} group={{ devops_docker_utils.user }}
+  tags: docker_compose
+
 - name: copy consul template
-  template: src=docker-compose-consul.yml dest="{{ devops_docker_utils.compose_dir }}/assemble/0_consul.yml"  owner={{ devops_docker_utils.user }} group={{ devops_docker_utils.user }}
+  template: src=docker-compose-consul.yml dest="{{ devops_docker_utils.compose_dir }}/assemble/1_consul.yml"  owner={{ devops_docker_utils.user }} group={{ devops_docker_utils.user }}
   when: devops_docker_utils.consul is defined
   tags: consul
 
@@ -25,15 +33,18 @@
   tags: registrator
 
 - name: copy logspout template
-  template: src=docker-compose-logspout.yml dest="{{ devops_docker_utils.compose_dir }}/assemble/2_logspout.yml"  owner={{ devops_docker_utils.user }} group={{ devops_docker_utils.user }}
+  template: src=docker-compose-logspout.yml dest="{{ devops_docker_utils.compose_dir }}/assemble/1_logspout.yml"  owner={{ devops_docker_utils.user }} group={{ devops_docker_utils.user }}
   when: devops_docker_utils.logspout is defined
   tags: logspout
-
 
 - name: create consul-template templates
   include: service-discovery.yml
   when: devops_docker_utils.service_discovery is defined
-  tags: service-discovery
+  tags: service_discovery
+
+- name: copy end docker_compose
+  template: src=end-docker-compose.yml dest="{{ devops_docker_utils.compose_dir }}/assemble/99_docker-compomse.yml"  owner={{ devops_docker_utils.user }} group={{ devops_docker_utils.user }}
+  tags: docker_compose
 
 - name: assemble docker-compose files
   assemble: src="{{ devops_docker_utils.compose_dir }}/assemble/" dest="{{ devops_docker_utils.compose_dir }}/docker-compose.yml" owner={{ devops_docker_utils.user }} group={{ devops_docker_utils.user }}
