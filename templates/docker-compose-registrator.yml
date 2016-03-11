@@ -1,9 +1,13 @@
 
 
-registrator:
- image: gliderlabs/registrator:{{ devops_docker_utils.registrator.tag }}
- net: "host"
- command: {{ devops_docker_utils.registrator.command }}
- restart: {{ devops_docker_utils.registrator.restart }}
- volumes:
-   - /var/run/docker.sock:/tmp/docker.sock
+    registrator:
+     image: gliderlabs/registrator:{{ devops_docker_utils.registrator.tag }}
+     command: {{ devops_docker_utils.registrator.command }}
+     restart: {{ devops_docker_utils.registrator.restart }}
+     network_mode: "host"
+     #networks:
+     #  - {{ devops_docker_utils_docker_network }}
+     depends_on:
+       - consul
+     volumes:
+       - /var/run/docker.sock:/tmp/docker.sock

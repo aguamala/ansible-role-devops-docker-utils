@@ -1,11 +1,14 @@
 
 
-logspout:
-  image: gliderlabs/logspout:{{ devops_docker_utils.logspout.tag }}
-  hostname: {{ hostname }}
-  ports:
-    - "{{ devops_docker_utils.logspout.ports }}"
-  command: {{ devops_docker_utils.logspout.command }}
-  restart: {{ devops_docker_utils.logspout.restart }}
-  volumes:
-     - /var/run/docker.sock:/tmp/docker.sock
+    logspout:
+      image: gliderlabs/logspout:{{ devops_docker_utils.logspout.tag }}
+      hostname: {{ hostname }}
+      ports:
+        - "{{ devops_docker_utils.logspout.ports }}"
+      command: {{ devops_docker_utils.logspout.command }}
+      restart: {{ devops_docker_utils.logspout.restart }}
+      #net: {{ devops_docker_utils_docker_network }}
+      networks:
+        - {{ devops_docker_utils_docker_network }}
+      volumes:
+         - /var/run/docker.sock:/tmp/docker.sock

@@ -1,12 +1,13 @@
 
-
-consul:
+    consul:
 {% if (devops_docker_utils_consul_bootstrap) %}
-  image: gliderlabs/consul-server:{{ devops_docker_utils.consul.tag }}
-  command: -bootstrap -advertise {{ ansible_default_ipv4.address }} {{ devops_docker_utils_consul_args }}
+      image: gliderlabs/consul-server:{{ devops_docker_utils.consul.tag }}
+      command: -bootstrap -advertise {{ ansible_default_ipv4.address }} {{ devops_docker_utils_consul_args }}
 {% else %}
-  image: gliderlabs/consul-{{ 'server' if devops_docker_utils_consul_server_mode  else 'agent' }}:{{ devops_docker_utils.consul.tag }}
-  command: -advertise {{ ansible_default_ipv4.address }} {{ devops_docker_utils_consul_args }}
+      image: gliderlabs/consul-{{ 'server' if devops_docker_utils_consul_server_mode  else 'agent' }}:{{ devops_docker_utils.consul.tag }}
+      command: -advertise {{ ansible_default_ipv4.address }} {{ devops_docker_utils_consul_args }}
 {% endif %}
-  net: "host"
-  restart: {{ devops_docker_utils.consul.restart }}
+      network_mode: "host"
+      #networks:
+      #  - {{ devops_docker_utils_docker_network }}
+      restart: {{ devops_docker_utils.consul.restart }}

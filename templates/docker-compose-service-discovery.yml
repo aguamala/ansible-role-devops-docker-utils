@@ -1,12 +1,17 @@
 
-service-discovery:
- image: aguamala/service-discovery:{{ devops_docker_utils.service_discovery.tag }}
- hostname: {{ hostname }}
- restart: {{ devops_docker_utils.service_discovery.restart }}
- privileged: true
- expose:
- {% for service in devops_docker_utils_service_discovery.templates  %}
-  - {{ service.port }}
- {% endfor %}
- volumes:
-   - ./consul-template:/etc/consul-template
+    service-discovery:
+     image: aguamala/service-discovery:{{ devops_docker_utils.service_discovery.tag }}
+     #hostname: {{ hostname }}
+     restart: {{ devops_docker_utils.service_discovery.restart }}
+     privileged: true
+     depends_on:
+       - consul
+     #net: {{ devops_docker_utils_docker_network }}
+     networks:
+       - {{ devops_docker_utils_docker_network }}
+     volumes:
+       - ./consul-template:/etc/consul-template
+     expose:
+{% for service in devops_docker_utils_service_discovery.consul_template.templates  %}
+      - {{ service.port }}
+{% endfor %}
