@@ -63,7 +63,7 @@ devops_docker_utils:
 
   registrator:
     tag: latest
-    command: "{{ devops_docker_utils_registrator_command | default('consul://localhost:8500') }}"
+    command: "{{ devops_docker_utils_registrator_command | default('consul://172.20.10.55:8500') }}"
     restart: always
     net: host
 

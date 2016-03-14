@@ -1,4 +1,4 @@
-consul = "localhost:8500"
+consul = "172.20.10.55:8500"
 // token = "abcd1234"
 retry = "10s"
 max_stale = "10m"

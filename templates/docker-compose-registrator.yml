@@ -1,12 +1,13 @@
 
 
     registrator:
+     container_name: registrator
      image: gliderlabs/registrator:{{ devops_docker_utils.registrator.tag }}
      command: {{ devops_docker_utils.registrator.command }}
      restart: {{ devops_docker_utils.registrator.restart }}
-     network_mode: "host"
-     #networks:
-     #  - {{ devops_docker_utils_docker_network }}
+     #network_mode: "host"
+     networks:
+       - {{ devops_docker_utils_docker_network }}
      depends_on:
        - consul
      volumes:
