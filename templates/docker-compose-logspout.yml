@@ -1,7 +1,7 @@
 
 
     logspout:
-      container_name: logspout
+      container_name: devops_docker_utils_logspout
       image: gliderlabs/logspout:{{ devops_docker_utils.logspout.tag }}
       hostname: {{ hostname }}
       ports:

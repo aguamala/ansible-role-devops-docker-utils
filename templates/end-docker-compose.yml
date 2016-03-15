@@ -1,4 +1,4 @@
 
 networks:
-  docker1:
+  {{ devops_docker_utils_docker_network }}:
     driver: bridge

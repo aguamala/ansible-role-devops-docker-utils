@@ -1,7 +1,7 @@
 
 
     registrator:
-     container_name: registrator
+     container_name: devops_docker_utils_registrator
      image: gliderlabs/registrator:{{ devops_docker_utils.registrator.tag }}
      command: {{ devops_docker_utils.registrator.command }}
      restart: {{ devops_docker_utils.registrator.restart }}
@@ -10,5 +10,7 @@
        - {{ devops_docker_utils_docker_network }}
      depends_on:
        - consul
+     extra_hosts:
+       - "consul:{{ ansible_default_ipv4.address }}"
      volumes:
        - /var/run/docker.sock:/tmp/docker.sock
