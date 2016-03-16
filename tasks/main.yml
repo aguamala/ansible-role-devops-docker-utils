@@ -8,9 +8,9 @@
 #- name: copia credenciales de artifactory
 #  template: src=dockercfg dest=/root/.dockercfg owner=centos group=centos
 
-- name: create docker network
-  shell: docker network create -d bridge {{ devops_docker_utils_docker_network }}
-  ignore_errors: yes
+#- name: create docker network
+#  shell: docker network create -d bridge {{ devops_docker_utils_docker_network }}
+#  ignore_errors: yes
 
 - name: create docker-compose dir
   file: path="{{ devops_docker_utils.compose_dir }}"  state=directory recurse=yes owner={{ devops_docker_utils.user }} group={{ devops_docker_utils.user }}

@@ -13,7 +13,7 @@ devops_docker_utils_consul_bootstrap: False
 devops_docker_utils_consul_args: "-node 'consul-node-{{ hostname }}' -dc 'virginia' -join '172.20.0.171' -log-level 'INFO'"
 
 #registrator
-devops_docker_utils_registrator_command: -ip {{ ansible_default_ipv4.address }} 
+devops_docker_utils_registrator_command: "-ip {{ ansible_default_ipv4.address }} consul://consul:8500"
 
 #service-discovery
 devops_docker_utils_service_discovery:
