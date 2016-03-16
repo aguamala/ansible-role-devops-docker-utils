@@ -1,8 +1,9 @@
-
+    
+    #service-discovery service runs in docker1 network by default
     service-discovery:
      container_name: devops_docker_utils_service_discovery
      image: aguamala/service-discovery:{{ devops_docker_utils.service_discovery.tag }}
-     #hostname: {{ hostname }}
+     hostname: elhost-172-20-10-227
      restart: {{ devops_docker_utils.service_discovery.restart }}
      privileged: true
      depends_on:

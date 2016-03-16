@@ -1,4 +1,5 @@
 
+    #consul runs in host's network
     consul:
       container_name: devops_docker_utils_consul
 {% if (devops_docker_utils_consul_bootstrap) %}

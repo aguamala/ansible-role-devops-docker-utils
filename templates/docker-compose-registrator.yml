@@ -1,16 +1,18 @@
 
-
+    #registrator runs in host's network
+    #if wanted to run inside another network we have to set -ip option to force host's IP and add extra_hosts to resolve consul
     registrator:
      container_name: devops_docker_utils_registrator
      image: gliderlabs/registrator:{{ devops_docker_utils.registrator.tag }}
+     hostname: elhost-172-20-10-227
      command: {{ devops_docker_utils.registrator.command }}
      restart: {{ devops_docker_utils.registrator.restart }}
      #network_mode: "host"
+     extra_hosts:
+       - "consul:{{ ansible_default_ipv4.address }}"
      networks:
        - {{ devops_docker_utils_docker_network }}
      depends_on:
        - consul
-     extra_hosts:
-       - "consul:{{ ansible_default_ipv4.address }}"
      volumes:
        - /var/run/docker.sock:/tmp/docker.sock

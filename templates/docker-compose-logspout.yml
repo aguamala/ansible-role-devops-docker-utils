@@ -1,9 +1,11 @@
 
-
+    #logspout service runs in docker1 network by default
     logspout:
       container_name: devops_docker_utils_logspout
       image: gliderlabs/logspout:{{ devops_docker_utils.logspout.tag }}
-      hostname: {{ hostname }}
+      hostname: elhost-172-20-10-227
+      environment:
+        SERVICE_NAME: logspout
       ports:
         - "{{ devops_docker_utils.logspout.ports }}"
       command: {{ devops_docker_utils.logspout.command }}
