@@ -2,12 +2,6 @@
 # tasks file for ansible-role-devops-docker-utils
 
 
-#- name: copia credenciales de artifactory
-#  template: src=dockercfg dest=/home/git/.dockercfg owner=centos group=centos
-
-#- name: copia credenciales de artifactory
-#  template: src=dockercfg dest=/root/.dockercfg owner=centos group=centos
-
 #- name: create docker network
 #  shell: docker network create -d bridge {{ devops_docker_utils_docker_network }}
 #  ignore_errors: yes
