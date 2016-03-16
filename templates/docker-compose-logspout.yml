@@ -3,7 +3,7 @@
     logspout:
       container_name: devops_docker_utils_logspout
       image: gliderlabs/logspout:{{ devops_docker_utils.logspout.tag }}
-      hostname: elhost-172-20-10-227
+      hostname: {{ hostname_replaced }}
       environment:
         SERVICE_NAME: logspout
       ports:
