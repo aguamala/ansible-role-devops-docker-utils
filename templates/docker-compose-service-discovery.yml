@@ -1,5 +1,4 @@
-    
-    #service-discovery service runs in docker1 network by default
+ #service-discovery service runs in docker1 network by default
     service-discovery:
      container_name: devops_docker_utils_service_discovery
      image: aguamala/service-discovery:{{ devops_docker_utils.service_discovery.tag }}
@@ -14,7 +13,10 @@
        - {{ devops_docker_utils_docker_network }}
      volumes:
        - ./consul-template:/etc/consul-template
+       - ./haproxy:/etc/haproxy
+{% if (devops_docker_utils_service_discovery.consul_template.templates is defined and devops_docker_utils_service_discovery.consul_template.templates is iterable) %}
      expose:
 {% for service in devops_docker_utils_service_discovery.consul_template.templates  %}
       - {{ service.port }}
 {% endfor %}
+{% endif %}

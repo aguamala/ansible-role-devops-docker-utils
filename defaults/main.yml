@@ -39,17 +39,17 @@ devops_docker_utils_service_discovery:
 
   consul_template:
     templates:
-      - name: haproxy_frontend_backend
-        dest: "haproxy_frontend_backend_nginx"
-        conf_name: haproxy_frontend_backend
-        conf_dest: haproxy_frontend_backend_nginx
-        service: "nginx"
-        bind: 8181
-        mode: "tcp"
-        log: "global"
-        balance: leastconn
-        port: 8181
-        command: "haproxy-restart"
+    #  - name: haproxy_frontend_backend
+    #    dest: "haproxy_frontend_backend_nginx"
+    #    conf_name: haproxy_frontend_backend
+    #    conf_dest: haproxy_frontend_backend_nginx
+    #    service: "nginx"
+    #    bind: "0.0.0.0:8181"
+    #    mode: "tcp"
+    #    log: "global"
+    #    balance: leastconn
+    #    port: 8181
+    #    command: "service-discovery-restart-haproxy"
 
 
 devops_docker_utils:

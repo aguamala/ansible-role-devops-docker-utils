@@ -1,5 +1,6 @@
 ---
 
+#consul-template
 - name: create consul-template conf.d dir
   file: path="{{ devops_docker_utils.compose_dir }}/consul-template/conf.d/" state=directory recurse=yes owner={{ devops_docker_utils.user }} group={{ devops_docker_utils.user }}
   when: devops_docker_utils_service_discovery is defined
@@ -19,11 +20,23 @@
 - name: copy source template file
   template: src="consul-template/templates/{{ item.name }}.ctmpl" dest="{{ devops_docker_utils.compose_dir }}/consul-template/templates/{{ item.dest }}.ctmpl" owner={{ devops_docker_utils.user }} group={{ devops_docker_utils.user }}
   with_items: devops_docker_utils_service_discovery.consul_template.templates
-  when: devops_docker_utils_service_discovery is defined
+  when: devops_docker_utils_service_discovery.consul_template.templates is defined and devops_docker_utils_service_discovery.consul_template.templates is iterable
 
-- name: copy template conf file
+- name: copy consul-template conf file
   template: src="consul-template/conf.d/{{ item.conf_name }}.hcl" dest="{{ devops_docker_utils.compose_dir }}/consul-template/conf.d/{{ item.conf_dest }}.hcl"  owner={{ devops_docker_utils.user }} group={{ devops_docker_utils.user }}
   with_items: devops_docker_utils_service_discovery.consul_template.templates
+  when: devops_docker_utils_service_discovery.consul_template.templates is defined and devops_docker_utils_service_discovery.consul_template.templates is iterable
+
+#haproxy
+- name: create haproxy conf dir
+  file: path="{{ devops_docker_utils.compose_dir }}/haproxy/assemble" state=directory recurse=yes owner={{ devops_docker_utils.user }} group={{ devops_docker_utils.user }}
+  when: devops_docker_utils_service_discovery is defined
+
+- name: copy haproxy conf file
+  template: src="haproxy/a_haproxy.cfg" dest="{{ devops_docker_utils.compose_dir }}/haproxy/assemble/"  owner={{ devops_docker_utils.user }} group={{ devops_docker_utils.user }}
+
+- name: assemble docker-compose files
+  assemble: src="{{ devops_docker_utils.compose_dir }}/haproxy/assemble/" dest="{{ devops_docker_utils.compose_dir }}/haproxy/haproxy.cfg" owner={{ devops_docker_utils.user }} group={{ devops_docker_utils.user }}
 
 - name: copy service-discovery template
   template: src=docker-compose-service-discovery.yml dest="{{ devops_docker_utils.compose_dir }}/assemble/1_service-discovery.yml"  owner={{ devops_docker_utils.user }} group={{ devops_docker_utils.user }}
