@@ -2,4 +2,4 @@
 networks:
   default:
     external:
-      name: docker1
+      name: {{ devops_docker_utils_docker_network }}
