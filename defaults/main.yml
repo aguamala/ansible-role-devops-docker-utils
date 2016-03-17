@@ -70,7 +70,7 @@ devops_docker_utils:
 
   logspout:
     tag: master
-    ports: "8000:8000"
+    ports: "8000:80"
     restart: always
     command: "{{ devops_docker_utils_logspout_command | default('syslog://') }}"
 
