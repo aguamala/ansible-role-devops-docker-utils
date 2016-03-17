@@ -1,6 +1,6 @@
  #service-discovery service runs in docker1 network by default
     service-discovery:
-     container_name: devops_docker_utils_service_discovery
+     container_name: service-discovery
      image: aguamala/service-discovery:{{ devops_docker_utils.service_discovery.tag }}
      hostname: {{ hostname_replaced }}
      restart: {{ devops_docker_utils.service_discovery.restart }}
@@ -9,8 +9,6 @@
        - consul
      extra_hosts:
        - "consul:{{ ansible_default_ipv4.address }}"
-     networks:
-       - {{ devops_docker_utils_docker_network }}
      volumes:
        - ./consul-template:/etc/consul-template
        - ./haproxy:/etc/haproxy

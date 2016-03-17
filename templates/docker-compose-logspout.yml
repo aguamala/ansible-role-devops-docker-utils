@@ -1,7 +1,7 @@
 
     #logspout service runs in docker1 network by default
     logspout:
-      container_name: devops_docker_utils_logspout
+      container_name: logspout
       image: gliderlabs/logspout:{{ devops_docker_utils.logspout.tag }}
       hostname: {{ hostname_replaced }}
       environment:
@@ -10,7 +10,5 @@
         - "{{ devops_docker_utils.logspout.ports }}"
       command: {{ devops_docker_utils.logspout.command }}
       restart: {{ devops_docker_utils.logspout.restart }}
-      networks:
-        - {{ devops_docker_utils_docker_network }}
       volumes:
          - /var/run/docker.sock:/tmp/docker.sock

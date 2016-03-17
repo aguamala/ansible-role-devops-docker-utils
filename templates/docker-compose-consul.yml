@@ -1,7 +1,7 @@
 
     #consul runs in host's network
     consul:
-      container_name: devops_docker_utils_consul
+      container_name: consul
 {% if (devops_docker_utils_consul_bootstrap) %}
       image: gliderlabs/consul-server:{{ devops_docker_utils.consul.tag }}
       command: -bootstrap -advertise {{ ansible_default_ipv4.address }} {{ devops_docker_utils_consul_args }}

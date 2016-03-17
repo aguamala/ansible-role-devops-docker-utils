@@ -1,4 +1,5 @@
 
 networks:
-  {{ devops_docker_utils_docker_network }}:
-    driver: bridge
+  default:
+    external:
+      name: docker1
