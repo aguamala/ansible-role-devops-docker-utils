@@ -9,14 +9,20 @@ devops_docker_utils_docker_network: docker1
 devops_docker_utils_docker_network_subnet: 172.18.0.0/16
 
 #consul
+#devops_docker_utils_consul_disable: yes
 devops_docker_utils_consul_server_mode: False
 devops_docker_utils_consul_bootstrap: False
 devops_docker_utils_consul_args: "-node '{{ hostname_replaced }}' -dc 'virginia' -join '172.20.0.171' -log-level 'INFO'"
 
+#logspout
+#devops_docker_utils_logspout_disable: yes
+
 #registrator
+#devops_docker_utils_registrator_disable: yes
 devops_docker_utils_registrator_command: "-ip {{ ansible_default_ipv4.address }} consul://consul:8500"
 
 #service-discovery
+#devops_docker_utils_service_discovery_disable: yes
 devops_docker_utils_service_discovery:
   haproxy:
     maxconn: 4000
