@@ -1,14 +1,10 @@
-  
-
   frontend fe-{{ item.service }}
     bind {{ item.bind }}
-    mode {{ item.mode }}
+    mode {{ item.fe_mode }}
     log {{ item.log }}
     default_backend be-{{ item.service }}
 
   backend be-{{ item.service }}
     balance {{ item.balance }}
-    mode http{{ '{{' }}range service "{{ item.service }}"{{ '}}' }}
+    mode {{ item.be_mode }}{{ '{{' }}range service "{{ item.service }}"{{ '}}' }}
     server {{ '{{' }}.Node{{ '}}' }} {{ '{{' }}.Address{{ '}}' }}:{{ '{{' }}.Port{{ '}}' }} check port {{ '{{' }}.Port{{ '}}' }}{{ '{{' }}end{{ '}}' }}
-
-
