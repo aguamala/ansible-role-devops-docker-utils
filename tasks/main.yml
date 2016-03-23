@@ -18,22 +18,22 @@
 
 - name: copy consul template
   template: src=docker-compose-consul.yml dest="{{ devops_docker_utils.compose_dir }}/assemble/1_consul.yml"  owner={{ devops_docker_utils.user }} group={{ devops_docker_utils.user }}
-  when: devops_docker_utils.consul is defined and devops_docker_utils_consul_disable undefined
+  when: devops_docker_utils.consul is defined and devops_docker_utils_consul_disable is undefined
   tags: consul
 
 - name: copy registrator template
   template: src=docker-compose-registrator.yml dest="{{ devops_docker_utils.compose_dir }}/assemble/1_registrator.yml"  owner={{ devops_docker_utils.user }} group={{ devops_docker_utils.user }}
-  when: devops_docker_utils.registrator is defined and devops_docker_utils_registrator_disable undefined
+  when: devops_docker_utils.registrator is defined and devops_docker_utils_registrator_disable is undefined
   tags: registrator
 
 - name: copy logspout template
   template: src=docker-compose-logspout.yml dest="{{ devops_docker_utils.compose_dir }}/assemble/1_logspout.yml"  owner={{ devops_docker_utils.user }} group={{ devops_docker_utils.user }}
-  when: devops_docker_utils.logspout is defined and devops_docker_utils_logspout_disable undefined
+  when: devops_docker_utils.logspout is defined and devops_docker_utils_logspout_disable is undefined
   tags: logspout
 
 - name: create consul-template templates
   include: service-discovery.yml
-  when: devops_docker_utils.service_discovery is defined and devops_docker_utils_service_discovery_disable undefined
+  when: devops_docker_utils.service_discovery is defined and devops_docker_utils_service_discovery_disable is undefined
   tags: service_discovery
 
 - name: copy end docker_compose
