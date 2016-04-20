@@ -59,10 +59,15 @@ devops_docker_utils_service_discovery:
     #    command: "service-discovery-restart-haproxy"
 
 
+#devops_docker_utils_restart: yes
+#devops_docker_utils_remove_up: yes
+
 devops_docker_utils:
   user: "{{ devops_docker_utils_user | default('centos') }}"
   compose_dir: "/home/{{ devops_docker_utils_user | default('centos') }}/{{ devops_docker_utils_compose_dir | default('devops_docker_utils') }}"
   pull: False
+  restart: "{{ devops_docker_utils_restart | default('no') }}"
+  remove_up: "{{ devops_docker_utils_remove_up | default('no') }}"
 
   consul:
     tag: "{{ devops_docker_utils_consul_tag | default('latest') }}"

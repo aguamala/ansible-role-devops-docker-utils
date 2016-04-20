@@ -48,5 +48,13 @@
   shell: /usr/bin/docker-compose pull chdir="{{ devops_docker_utils.compose_dir }}"
   when: devops_docker_utils.pull
 
+- name: docker-compose restart
+  shell: /usr/bin/docker-compose restart chdir="{{ devops_docker_utils.compose_dir }}"
+  when: devops_docker_utils.restart == 'yes'
+
+- name: docker-compose remove and up
+  shell: /usr/bin/docker-compose rm -v -f chdir="{{ devops_docker_utils.compose_dir }}"
+  when: devops_docker_utils.remove_up == 'yes'
+
 - name: docker-compose up
   shell: /usr/bin/docker-compose up -d chdir="{{ devops_docker_utils.compose_dir }}"
