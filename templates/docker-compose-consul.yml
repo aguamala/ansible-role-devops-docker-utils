@@ -11,3 +11,5 @@
 {% endif %}
       network_mode: "host"
       restart: {{ devops_docker_utils.consul.restart }}
+      #environment:
+      #  LOGSPOUT: ignore

@@ -12,7 +12,7 @@ devops_docker_utils_docker_network_subnet: 172.18.0.0/16
 #devops_docker_utils_consul_disable: yes
 devops_docker_utils_consul_server_mode: False
 devops_docker_utils_consul_bootstrap: False
-devops_docker_utils_consul_args: "-node '{{ hostname_replaced }}' -dc 'virginia' -join '172.20.0.171' -log-level 'INFO'"
+devops_docker_utils_consul_args: "-node '{{ hostname_replaced }}' -dc 'virginia' -join '172.20.0.171' -log-level 'err'"
 
 #logspout
 #devops_docker_utils_logspout_disable: yes
