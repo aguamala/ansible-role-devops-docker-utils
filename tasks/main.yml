@@ -62,9 +62,14 @@
   when: devops_docker_utils.restart == 'yes'
   tags: docker_compose
 
-- name: docker-compose remove and up
+- name: docker-compose stop
+  shell: /usr/bin/docker-compose stop chdir="{{ devops_docker_utils.compose_dir }}"
+  when: devops_docker_utils.stop_remove == 'yes'
+  tags: docker_compose
+
+- name: docker-compose remove
   shell: /usr/bin/docker-compose rm -v -f chdir="{{ devops_docker_utils.compose_dir }}"
-  when: devops_docker_utils.remove_up == 'yes'
+  when: devops_docker_utils.stop_remove == 'yes'
   tags: docker_compose
 
 - name: docker-compose up
