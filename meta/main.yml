@@ -164,5 +164,4 @@ galaxy_info:
   #- web
 dependencies:
   - { role: aguamala.hostname }
-  - { role: aguamala.docker-engine-install,  tags: [ 'docker_engine_install' ] }
   - { role: aguamala.docker-compose-install , tags: [ 'docker_compose_install' ] }

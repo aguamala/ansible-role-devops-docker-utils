@@ -5,7 +5,7 @@
 #devops_docker_utils_user: centos
 #devops_docker_utils_compose_dir: devops_docker_utils
 
-devops_docker_utils_docker_network: docker1
+#devops_docker_utils_docker_network: devops
 devops_docker_utils_docker_network_subnet: 172.18.0.0/16
 
 #consul
@@ -88,26 +88,3 @@ devops_docker_utils:
   service_discovery:
     tag: latest
     restart: always
-
-
-docker_engine_install:
-  #install docker from docker repo
-  repos_install:
-      docker: True
-  pkg_mgr:
-    install:
-      - name: docker-engine
-        repo: dockerrepo
-
-  started: True
-  enabled: True
-  sysconfig:
-    options: --selinux-enabled
-    docker_cert_path: /etc/docker
-    #OPTIONAL
-    #add_registry:
-    #block_registry
-    #insecure_registry
-    #docker_tmpdir
-    #logrotate
-    #docker_network_options

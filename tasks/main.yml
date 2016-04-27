@@ -4,6 +4,7 @@
 
 - name: create docker network
   shell: docker network create -d bridge --subnet={{ devops_docker_utils_docker_network_subnet }} {{ devops_docker_utils_docker_network }}
+  when: devops_docker_utils_docker_network is defined
   ignore_errors: yes
 
 - name: create docker-compose dir
@@ -44,8 +45,9 @@
     - service_discovery
     - docker_compose
 
-- name: copy end docker_compose
+- name: copy end docker_compose with network
   template: src=end-docker-compose.yml dest="{{ devops_docker_utils.compose_dir }}/assemble/99_docker-compomse.yml"  owner={{ devops_docker_utils.user }} group={{ devops_docker_utils.user }}
+  when: devops_docker_utils_docker_network is defined
   tags: docker_compose
 
 - name: assemble docker-compose files
