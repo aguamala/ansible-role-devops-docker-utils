@@ -6,7 +6,7 @@
 #devops_docker_utils_compose_dir: devops_docker_utils
 
 #devops_docker_utils_docker_network: devops
-devops_docker_utils_docker_network_subnet: 172.18.0.0/16
+devops_docker_utils_docker_network_subnet: 172.19.0.0/16
 
 #consul
 #devops_docker_utils_consul_disable: yes
