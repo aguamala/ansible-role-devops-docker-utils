@@ -13,4 +13,5 @@
      depends_on:
        - consul
      volumes:
+       - /etc/localtime:/etc/localtime:ro
        - /var/run/docker.sock:/tmp/docker.sock

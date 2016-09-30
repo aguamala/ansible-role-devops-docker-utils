@@ -11,4 +11,5 @@
       command: {{ devops_docker_utils.logspout.command }}
       restart: {{ devops_docker_utils.logspout.restart }}
       volumes:
+         - /etc/localtime:/etc/localtime:ro
          - /var/run/docker.sock:/tmp/docker.sock

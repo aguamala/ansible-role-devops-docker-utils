@@ -11,5 +11,7 @@
 {% endif %}
       network_mode: "host"
       restart: {{ devops_docker_utils.consul.restart }}
+      volumes:
+         - /etc/localtime:/etc/localtime:ro
       #environment:
       #  LOGSPOUT: ignore
