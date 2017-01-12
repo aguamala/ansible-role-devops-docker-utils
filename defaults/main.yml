@@ -12,7 +12,7 @@ devops_docker_utils_docker_network_subnet: 172.19.0.0/16
 #devops_docker_utils_consul_disable: yes
 devops_docker_utils_consul_server_mode: False
 devops_docker_utils_consul_bootstrap: False
-devops_docker_utils_consul_args: "-node '{{ hostname_replaced }}' -dc 'virginia' -join '172.20.0.171' -log-level 'err'"
+devops_docker_utils_consul_args: "-advertise {{ ansible_default_ipv4.address }} -node '{{ hostname_replaced }}' -datacenter 'virginia' -retry-join '172.20.0.171' -log-level 'err' -data-dir /consul/data"
 
 #logspout
 #devops_docker_utils_logspout_disable: yes
@@ -64,7 +64,7 @@ devops_docker_utils_service_discovery:
 
 devops_docker_utils:
   user: "{{ devops_docker_utils_user | default('centos') }}"
-  compose_dir: "/home/{{ devops_docker_utils_user | default('centos') }}/{{ devops_docker_utils_compose_dir | default('devops_docker_utils') }}"
+  compose_dir: "/home/{{ devops_docker_utils_user | default('centos') }}/{{ devops_docker_utils_compose_dir | default('devops-docker-utils') }}"
   pull: False
   restart: "{{ devops_docker_utils_restart | default('no') }}"
   stop_remove: "{{ devops_docker_utils_stop_remove | default('no') }}"
