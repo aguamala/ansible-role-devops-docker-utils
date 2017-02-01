@@ -12,7 +12,7 @@ devops_docker_utils_docker_network_subnet: 172.19.0.0/16
 #devops_docker_utils_consul_disable: yes
 devops_docker_utils_consul_server_mode: False
 devops_docker_utils_consul_bootstrap: False
-devops_docker_utils_consul_args: "-advertise {{ ansible_default_ipv4.address }} -node '{{ hostname_replaced }}' -datacenter 'virginia' -retry-join '172.20.0.171' -log-level 'err' -data-dir /consul/data"
+devops_docker_utils_consul_args: "-advertise {{ ansible_default_ipv4.address }} -client '0.0.0.0' -node '{{ hostname_replaced }}' -datacenter 'virginia' -retry-join '172.20.0.171' -retry-join '172.20.0.66' -retry-join '172.20.0.94' -log-level 'err' -data-dir /consul/data"
 
 #logspout
 #devops_docker_utils_logspout_disable: yes
