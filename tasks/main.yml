@@ -1,6 +1,8 @@
 ---
 # tasks file for ansible-role-devops-docker-utils
 
+- include: remove.yml
+
 - name: create docker network
   shell: docker network create -d bridge --subnet={{ devops_docker_utils_docker_network_subnet }} {{ devops_docker_utils_docker_network }}
   when: devops_docker_utils_docker_network is defined

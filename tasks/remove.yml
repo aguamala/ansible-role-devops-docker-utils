@@ -1,0 +1,13 @@
+---
+
+- name: docker-compose stop
+  shell: /usr/bin/docker-compose stop chdir="{{ devops_docker_utils.compose_dir }}"
+  ignore_errors: yes
+
+- name: docker-compose remove
+  shell: /usr/bin/docker-compose rm -v -f chdir="{{ devops_docker_utils.compose_dir }}"
+  ignore_errors: yes
+
+- name: remove docker-compose assemble dir
+  file: path="{{ devops_docker_utils.compose_dir }}/assemble"  state=absent
+  ignore_errors: yes
