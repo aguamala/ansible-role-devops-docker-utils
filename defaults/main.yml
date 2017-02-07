@@ -71,20 +71,20 @@ devops_docker_utils:
 
   consul:
     tag: "{{ devops_docker_utils_consul_tag | default('latest') }}"
-    restart: "{{ devops_docker_utils_consul_restart | default('always') }}"
+    restart: "{{ devops_docker_utils_consul_restart | default('unless-stopped') }}"
 
   registrator:
     tag: latest
     command: "{{ devops_docker_utils_registrator_command | default('consul://localhost:8500') }}"
-    restart: always
+    restart: unless-stopped
     net: host
 
   logspout:
     tag: master
     ports: "8000:80"
-    restart: always
+    restart: unless-stopped
     command: "{{ devops_docker_utils_logspout_command | default('syslog://') }}"
 
   service_discovery:
     tag: latest
-    restart: always
+    restart: unless-stopped
