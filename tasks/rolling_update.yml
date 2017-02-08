@@ -1,0 +1,25 @@
+---
+
+- name: docker-compose pull
+  shell: /usr/bin/docker-compose pull chdir="{{ devops_docker_utils.compose_dir }}"
+  when: devops_docker_utils.pull
+  tags: docker_compose
+
+- name: docker-compose restart
+  shell: /usr/bin/docker-compose restart chdir="{{ devops_docker_utils.compose_dir }}"
+  when: devops_docker_utils.restart == 'yes'
+  tags: docker_compose
+
+- name: docker-compose stop
+  shell: /usr/bin/docker-compose stop chdir="{{ devops_docker_utils.compose_dir }}"
+  when: devops_docker_utils.stop_remove == 'yes'
+  tags: docker_compose
+
+- name: docker-compose remove
+  shell: /usr/bin/docker-compose rm -v -f chdir="{{ devops_docker_utils.compose_dir }}"
+  when: devops_docker_utils.stop_remove == 'yes'
+  tags: docker_compose
+
+- name: docker-compose up
+  shell: /usr/bin/docker-compose up -d chdir="{{ devops_docker_utils.compose_dir }}"
+  tags: docker_compose

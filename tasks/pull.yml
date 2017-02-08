@@ -1,0 +1,4 @@
+---
+
+- name: docker-compose pull
+  shell: /usr/bin/docker-compose pull chdir="{{ devops_docker_utils.compose_dir }}"
