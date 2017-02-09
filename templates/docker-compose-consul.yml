@@ -13,5 +13,6 @@
       restart: {{ devops_docker_utils.consul.restart }}
       volumes:
          - /etc/localtime:/etc/localtime:ro
-      #environment:
+      environment:
+        CONSUL_LOCAL_CONFIG: '{"leave_on_terminate": true}'
       #  LOGSPOUT: ignore
