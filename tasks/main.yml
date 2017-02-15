@@ -60,3 +60,4 @@
 
 - include: rolling_update.yml
   when: devops_docker_utils_just_pull is undefined
+  tags: devops_docker_utils_rolling_update
