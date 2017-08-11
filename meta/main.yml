@@ -162,6 +162,4 @@ galaxy_info:
   #- packaging
   #- system
   #- web
-dependencies:
-  - { role: aguamala.hostname }
-  - { role: aguamala.docker-compose-install , tags: [ 'docker_compose_install' ] }
+dependencies: []
